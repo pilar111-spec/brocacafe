@@ -1,0 +1,5 @@
+streamlit
+supervision
+inference-sdk
+Pillow
+numpy
