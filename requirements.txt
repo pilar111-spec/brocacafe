@@ -1,5 +1,6 @@
 streamlit
-supervision
+supervision==0.18.0
 inference-sdk
 Pillow
 numpy
+opencv-python-headless
