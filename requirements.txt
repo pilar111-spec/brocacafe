@@ -1,5 +1,8 @@
 streamlit
-supervision
-inference-sdk
-Pillow
+torch
+torchvision
 numpy
+pillow
+matplotlib
+opencv-python-headless
+segmentation-models-pytorch
