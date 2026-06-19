@@ -1,6 +1,6 @@
 import streamlit as st
 import supervision as sv
-from inference_sdk import InferenceHTTPClient
+import requests
 from PIL import Image
 import numpy as np
 import io
@@ -239,10 +239,17 @@ LABEL_MAP = {
     "Coffee Berry Borer - v2 2024-02-05 9-24pm": "Broca Encontrada",
 }
 
-CLIENT = InferenceHTTPClient(
-    api_url="https://serverless.roboflow.com",
-    api_key=st.secrets["ROBOFLOW_API_KEY"]
-)
+ROBOFLOW_API_KEY = st.secrets["ROBOFLOW_API_KEY"]
+MODEL_ID = "proyecto-deteccion-broca-de-cafe/2"
+
+def detect_objects(image_path):
+    with open(image_path, "rb") as f:
+        result = requests.post(
+            f"https://detect.roboflow.com/{MODEL_ID}",
+            params={"api_key": ROBOFLOW_API_KEY},
+            files={"file": f}
+        ).json()
+    return result
 
 with st.sidebar:
     st.markdown("## ☕ BrocaCafe")
@@ -293,7 +300,7 @@ if uploaded_file is not None:
 
     with st.spinner('🤖 La inteligencia artificial está analizando la imagen...'):
         time.sleep(0.5)
-        result = CLIENT.infer("temp.jpg", model_id="proyecto-deteccion-broca-de-cafe/2")
+        result = detect_objects("temp.jpg")
         detections = sv.Detections.from_inference(result)
 
     scene = np.array(image)
