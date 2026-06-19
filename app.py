@@ -49,7 +49,7 @@ st.markdown("""
 
     .header-title {
         color: #ffffff;
-        font-size: 2rem;
+        font-size: 1.9rem;
         font-weight: 800;
         margin: 0;
         line-height: 1.3;
@@ -57,21 +57,9 @@ st.markdown("""
 
     .header-subtitle {
         color: #b0a090;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 400;
         margin-top: 0.3rem;
-    }
-
-    .header-badge {
-        display: inline-block;
-        background: rgba(240, 165, 0, 0.12);
-        color: #f0a500;
-        padding: 0.25rem 1rem;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-top: 0.7rem;
-        border: 1px solid rgba(240, 165, 0, 0.2);
     }
 
     .card {
@@ -188,23 +176,6 @@ st.markdown("""
         color: #8b949e !important;
     }
 
-    .stExpander {
-        background: #161b22;
-        border: 1px solid #21262d;
-        border-radius: 10px;
-    }
-
-    .stExpander summary {
-        color: #c9d1d9;
-        font-weight: 500;
-    }
-
-    .stExpander summary:hover {
-        color: #f0a500;
-    }
-
-    div[data-testid="stExpanderToggleIcon"] { color: #f0a500; }
-
     .stAlert {
         border-radius: 10px;
         border: none;
@@ -230,6 +201,12 @@ st.markdown("""
         background: #0d1117;
     }
 
+    button[title="Main menu"] { display: none !important; }
+    .stMainMenu { display: none !important; }
+    footer { display: none !important; }
+    #MainMenu { visibility: hidden !important; }
+    header[data-testid="stHeader"] { display: none !important; }
+
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
@@ -251,7 +228,7 @@ st.markdown("""
     }
 
     @media (max-width: 768px) {
-        .header-title { font-size: 1.4rem; }
+        .header-title { font-size: 1.2rem; }
         .header-container { padding: 1.2rem; }
     }
 </style>
@@ -264,7 +241,7 @@ LABEL_MAP = {
 
 CLIENT = InferenceHTTPClient(
     api_url="https://serverless.roboflow.com",
-    api_key="XaWJq0G22Dy7p6HR6D9k"
+    api_key=st.secrets["ROBOFLOW_API_KEY"]
 )
 
 with st.sidebar:
@@ -273,7 +250,7 @@ with st.sidebar:
     st.markdown("### ¿Cómo funciona?")
     st.markdown(
         "1. Sube una foto de un grano de café\n"
-        "2. El modelo entrenado analiza la imagen\n"
+        "2. El modelo analiza la imagen\n"
         "3. Si hay broca, se marca con un recuadro\n"
         "4. Revisa los resultados en segundos"
     )
@@ -293,10 +270,10 @@ st.markdown(
     """
     <div class="header-container">
         <div style="position: relative; z-index: 1;">
-            <div class="header-title">“MODELO INTELIGENTE DE DETECCIÓN DE LA BROCA EN EL GRANO DE CAFÉ EMPLEANDO VISIÓN ARTIFICIAL”</div>
+            <div class="header-title">"MODELO INTELIGENTE DE DETECCIÓN DE LA BROCA EN EL GRANO DE CAFÉ EMPLEANDO VISIÓN ARTIFICIAL"</div>
             <div style="margin-top: 0.8rem; border-top: 1px solid rgba(240,165,0,0.15); padding-top: 0.7rem;">
-                <div style="color: #c9d1d9; font-size: 1.2rem; font-weight: 600;">Postulante: Evelyn Pilar Gonzales Poma</div>
-                <div style="color: #c9d1d9; font-size: 1.2rem; font-weight: 600; margin-top: 0.2rem;">Tutor Especialista: Ph.D. Rogelio Mamani Ramos</div>
+                <div style="color: #c9d1d9; font-size: 1.1rem; font-weight: 600;">Postulante: Evelyn Pilar Gonzales Poma</div>
+                <div style="color: #c9d1d9; font-size: 1.1rem; font-weight: 600; margin-top: 0.2rem;">Tutor Especialista: Ph.D. Rogelio Mamani Ramos</div>
             </div>
         </div>
     </div>
@@ -305,7 +282,7 @@ st.markdown(
 )
 
 uploaded_file = st.file_uploader(
-    "📤 Sube una imagen del grano de café",
+    "\U0001f4e4 Sube una imagen del grano de café",
     type=["jpg", "jpeg", "png"],
     help="Formatos aceptados: JPG, JPEG, PNG"
 )
@@ -342,13 +319,13 @@ if uploaded_file is not None:
 
     with col1:
         
-        st.markdown("#### 📸 Imagen Original")
+        st.markdown("#### \U0001f4f8 Imagen Original")
         st.image(image, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
-        
-        st.markdown("#### 🔍 Resultado de Detección")
+       
+        st.markdown("#### \U0001f50d Resultado de Deteccio\u0301n")
         st.image(annotated_image, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -362,7 +339,7 @@ if uploaded_file is not None:
             f"""
             <div class="metric-card">
                 <div class="metric-label">Broca Detectada</div>
-                <div class="metric-value">{'⚠️ Sí' if cantidad > 0 else '✅ No'}</div>
+                <div class="metric-value">{'Sí' if cantidad > 0 else 'No'}</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -388,7 +365,7 @@ if uploaded_file is not None:
         )
     else:
         st.success(
-            "✅ **No se detectó presencia de broca en esta muestra.** "
+            "✅ **No se detecto\u0301 presencia de broca en esta muestra.** "
             "El grano se encuentra en buen estado."
         )
 
@@ -400,7 +377,7 @@ if uploaded_file is not None:
     col_d1, col_d2 = st.columns([1, 5])
     with col_d1:
         st.download_button(
-            label="📥 Descargar imagen anotada",
+            label="\U0001f4e5 Descargar imagen anotada",
             data=byte_im,
             file_name="broca_deteccion.png",
             mime="image/png",
@@ -413,7 +390,7 @@ else:
             <div class="empty-state-icon">☕</div>
             <h3>Sube una imagen para comenzar</h3>
             <p>
-                Sube una foto de un grano de café y la IA detectará
+                Sube una foto de un grano de café y el modelo entrenado detectará
                 automáticamente si hay presencia de broca.
             </p>
         </div>
@@ -424,8 +401,8 @@ else:
 st.markdown(
     """
     <div class="footer">
-        <strong>BrocaCafe</strong> Modelo de Monitoreo Inteligente v1.0.0<br>
-
+        <strong>BrocaCafe</strong> · Sistema de Monitoreo Inteligente v1.0.0<br>
+    
     </div>
     """,
     unsafe_allow_html=True

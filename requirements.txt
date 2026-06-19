@@ -1,8 +1,0 @@
-streamlit
-torch
-torchvision
-numpy
-pillow
-matplotlib
-opencv-python-headless
-segmentation-models-pytorch
