@@ -304,14 +304,24 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-uploaded_file = st.file_uploader(
-    "📤 Sube una imagen del grano de café",
-    type=["jpg", "jpeg", "png"],
-    help="Formatos aceptados: JPG, JPEG, PNG"
+upload_method = st.radio(
+    "Seleccionar método:",
+    ["📷 Tomar foto", "📤 Subir archivo"],
+    horizontal=True
 )
 
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+img_source = None
+if upload_method == "📷 Tomar foto":
+    img_source = st.camera_input("Toma una foto del grano de café")
+else:
+    img_source = st.file_uploader(
+        "📤 Sube una imagen del grano de café",
+        type=["jpg", "jpeg", "png"],
+        help="Formatos aceptados: JPG, JPEG, PNG"
+    )
+
+if img_source is not None:
+    image = Image.open(img_source)
     image.save("temp.jpg")
 
     with st.spinner('🤖 La inteligencia artificial está analizando la imagen...'):
@@ -413,8 +423,8 @@ else:
             <div class="empty-state-icon">☕</div>
             <h3>Sube una imagen para comenzar</h3>
             <p>
-                Usa el selector de archivos de arriba para cargar una foto de un grano de café
-                y la IA detectará automáticamente si hay presencia de broca.
+                Toma una foto con tu cámara o sube un archivo, y la IA detectará
+                automáticamente si hay presencia de broca en el grano de café.
             </p>
         </div>
         """,
